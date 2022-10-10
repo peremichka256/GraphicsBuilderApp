@@ -1,13 +1,59 @@
 # coding: utf-8
 from tkinter import *
+from tkinter import ttk
+
+
+clicks = 0
+
+
+def finish():
+    root.destroy()
+    print('РћРєРЅРѕ Р·Р°РєСЂС‹С‚Рѕ')
+
+
+def print_info(widget, depth=0):
+    widget_class = widget.winfo_class()
+    widget_width = widget.winfo_width()
+    widget_height = widget.winfo_height()
+    widget_x = widget.winfo_x()
+    widget_y = widget.winfo_y()
+    print("  " * depth + f"{widget_class} width={widget_width}"
+                         f" height={widget_height} x={widget_x}"
+                         f" y={widget_y}")
+    for child in widget.winfo_children():
+        print_info(child, depth + 1)
+
+
+def click_button():
+    global clicks
+    clicks += 1
+    another_btn['text'] = f'Clicks {clicks}'
+
 
 if __name__ == '__main__':
-    root = Tk() #создание корневого объекта - окно
-    root.title("Приложения для построения графиков")
-    root.geometry('500x500') #Размеры окна
-    label = Label(text = 'Hello world')
-    label.pack()    
+    root = Tk()
+    root.title("Grafic build")
+    root.geometry('800x500+0+0')
+    root.resizable(False, False)
+    label = Label(text="Hello world")
+    label.pack()
+    root.protocol('WM_DELETE_WINDOW', finish)
+    root.attributes('-alpha', 1)
+    root.attributes('-toolwindow', True)
+
+    # РљРЅРѕРїРєР° РІ РѕР±С‹С‡РЅРѕРј С‚РєРёРЅС‚РµСЂРµ
+    btn = Button(text="РќР°Р¶РјРё РЅР° РєРЅРѕРїРєСѓ, РїРѕР»СѓС‡РёС€СЊ СЂРµР·СѓР»СЊС‚Р°С‚")
+    btn.pack(anchor=E, padx = 20)
+
+    # РљРЅРѕРїРєР° РІ С‚С‚Рє
+    btn = ttk.Button(text='Р•С‰С‘ РѕРґРЅР° РєРЅРѕРїРєР°', state=['disabled'])
+    btn['text'] = 'РґСЂСѓРіРѕР№ С‚РµРєСЃС‚'
+    btnText = btn['text']
+    print(btnText)
+    btn.pack(anchor=W, padx = 20)
+    another_btn = ttk.Button()
+    another_btn.config(text='РћС‡РµСЂРµРґРЅР°СЏ РєРЅРѕРїРєР°', command=click_button)
+    another_btn.pack(side = BOTTOM, fill = X)
+    root.update()
+    print_info(root)
     root.mainloop()
-
-
-
