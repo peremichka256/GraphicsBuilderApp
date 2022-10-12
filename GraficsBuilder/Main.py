@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import ttk
 
 
+#Счётчик кликов
 clicks = 0
 
 
@@ -11,6 +12,7 @@ def finish():
     print('Окно закрыто')
 
 
+#Метод выдающий информацию о виджете и всех его дочерних элементов
 def print_info(widget, depth=0):
     widget_class = widget.winfo_class()
     widget_width = widget.winfo_width()
@@ -24,6 +26,7 @@ def print_info(widget, depth=0):
         print_info(child, depth + 1)
 
 
+#Метод считающий клики по кнопке
 def click_button():
     global clicks
     clicks += 1
@@ -56,4 +59,15 @@ if __name__ == '__main__':
     another_btn.pack(side = BOTTOM, fill = X)
     root.update()
     print_info(root)
+
+    #Позиционирование
+    place_button = ttk.Button(text = 'Спозиционированная кнопка')
+    #relx rely в долях, а x y в пикселях
+    #relheight relwidth в долях, width и height в пикселях
+    place_button.place(relx = 0.4, rely = 0.5, height = 120, width = 120)
+
+    #Позиционирование Grid не работает
+    #Обработка событий
+
     root.mainloop()
+
