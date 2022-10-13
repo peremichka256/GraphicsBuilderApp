@@ -3,14 +3,15 @@ from tkinter import *
 from tkinter import ttk
 import matplotlib
 import matplotlib.pyplot as plt
-from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 import pandas as pd
+from tkinter import filedialog
 matplotlib.use("TkAgg")
 
 
+#Функция пстроения графика
 def graphic_build_click():
-    table = pd.read_excel('parabola.xlsx')
+    table = pd.read_excel(open_file())
     x = table.values[:, 0]
     y = table.values[:, 1]
     graphic_figure = plt.figure(figsize = (7, 7))
@@ -22,6 +23,16 @@ def graphic_build_click():
     plt.plot(x, y)
 
 
+def open_file():
+    filetypes = (
+        ('Excel files', '*.xlsx'),
+        ('All files', '*.*')
+    )
+    return filedialog.askopenfilename(title="Выберете файл",
+                                      filetypes=filetypes)
+
+
+#Точка входа
 if __name__ == '__main__':
     root = Tk()
     root.title("Graphic build")
